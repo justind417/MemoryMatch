@@ -16,6 +16,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".Memory3x3"
+            android:label="Memory3x3"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>
