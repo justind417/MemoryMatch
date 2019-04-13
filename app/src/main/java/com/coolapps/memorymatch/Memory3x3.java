@@ -3,6 +3,7 @@ package com.coolapps.memorymatch;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -55,7 +56,10 @@ public class Memory3x3 extends Activity {
 
 
         loadImages();
+        Log.i("--------", "----cards Array-----"+ (Arrays.asList(cards)) + " ");
         Collections.shuffle(Arrays.asList(cards));
+        Log.i("--------", "----cards Array-----"+ (Arrays.asList(cards)) + " ");
+
 
 
         a1.setOnClickListener(new View.OnClickListener() {
@@ -79,16 +83,57 @@ public class Memory3x3 extends Activity {
                 flipCard(a3, thisCard);
             }
         });
-
+        b1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int thisCard = Integer.parseInt((String) v.getTag());
+                flipCard(b1, thisCard);
+            }
+        });
+        b2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int thisCard = Integer.parseInt((String) v.getTag());
+                flipCard(b2, thisCard);
+            }
+        });
+        b3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int thisCard = Integer.parseInt((String) v.getTag());
+                flipCard(b3, thisCard);
+            }
+        });
+        c1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int thisCard = Integer.parseInt((String) v.getTag());
+                flipCard(c1, thisCard);
+            }
+        });
+        c2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int thisCard = Integer.parseInt((String) v.getTag());
+                flipCard(c2, thisCard);
+            }
+        });
+        c3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int thisCard = Integer.parseInt((String) v.getTag());
+                flipCard(c3, thisCard);
+            }
+        });
     }
 
 
     private void flipCard(ImageView img, int card){
-       if(card == 1){
+       if(cards[card] == 1){
             img.setImageResource(image1);
-       }else if(card == 2){
+       }else if(cards[card] == 2){
            img.setImageResource(image2);
-       }else if(card == 3){
+       }else if(cards[card] == 3){
            img.setImageResource(image3);
        }
     }
