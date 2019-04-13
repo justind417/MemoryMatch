@@ -14,13 +14,13 @@ import java.util.Collections;
 
 public class Memory3x3 extends Activity {
 
-    TextView tv_p1, tv_cmp;
+    TextView tv_p1, tv_cmp, tv_p1_score, tv_p2_score;
 
-    ImageView a1, a2, a3,a4,a5, b1, b2, b3, b4, b5, c1, c2, c3, c4, c5, d1, d2, d3, d4, d5;
+    ImageView a1, a2, a3,a4,a5, b1, b2, b3, b4, b5, c1, c2, c3, c4, c5, d1, d2, d3, d4, d5, turn_img;
 
     Integer[] cards= {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19};
 
-    int image0, image1, image2, image3, image4, image5, image6, image7, image8, image9;
+    int image0, image1, image2, image3, image4, image5, image6, image7, image8, image9, rightArrow, leftArrow;
 
     int firstCard, secondCard;
     int clickedFirst, clickedSecond;
@@ -35,7 +35,9 @@ public class Memory3x3 extends Activity {
         setContentView(R.layout.activity_memory3x3);
 
         tv_p1 = findViewById(R.id.player_tv);
+        tv_p1_score = findViewById(R.id.p1_score_tv);
         tv_cmp = findViewById(R.id.computer_tv);
+        tv_p2_score = findViewById(R.id.p2_score_tv);
 
         a1 = findViewById(R.id.A1_img_btn);
         a2 = findViewById(R.id.A2_img_btn);
@@ -57,8 +59,9 @@ public class Memory3x3 extends Activity {
         d3 = findViewById(R.id.D3_img_btn);
         d4 = findViewById(R.id.D4_img_btn);
         d5 = findViewById(R.id.D5_img_btn);
+        turn_img = findViewById(R.id.turn_iv);
 
-
+        // tags used to check for match.
         a1.setTag("0");
         a2.setTag("1");
         a3.setTag("2");
@@ -80,13 +83,13 @@ public class Memory3x3 extends Activity {
         d4.setTag("18");
         d5.setTag("19");
 
-
+        //load images for the board.
         loadImages();
-        Log.i("--------", "----cards Array-----"+ (Arrays.asList(cards)) + " ");
+        //shuffle the array to simulate shuffling the cards.
         Collections.shuffle(Arrays.asList(cards));
-        Log.i("--------", "----cards Array-----"+ (Arrays.asList(cards)) + " ");
 
 
+//On Click Listener for each button, calls flip card when clicked & passes the tag number of the card that was clicked as an Integer for card comparison in CheckforMatch.
 
         a1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -246,7 +249,7 @@ public class Memory3x3 extends Activity {
 
     }
 
-
+// flip card to show the image
     private void flipCard(ImageView img, int card){
        if(cards[card] == 0){
             img.setImageResource(image0);
@@ -289,7 +292,7 @@ public class Memory3x3 extends Activity {
         }else if(cards[card] == 19){
             img.setImageResource(image9);
         }
-
+//set first and second card to 0-9 to prepare to check for a match
        if(cardNumber == 1){
            firstCard = cards[card];
            if(firstCard >= 10){
@@ -297,7 +300,6 @@ public class Memory3x3 extends Activity {
            }
            cardNumber = 2;
            clickedFirst = card;
-           Log.i("--------", "----clickedFirst-----"+ clickedFirst + " ");
            img.setEnabled(false);
        }else if(cardNumber == 2){
            secondCard = cards[card];
@@ -306,8 +308,7 @@ public class Memory3x3 extends Activity {
            }
            cardNumber = 1;
            clickedSecond = card;
-           Log.i("--------", "----clickedSecond-----"+ clickedSecond + " ");
-
+//disable all buttons while check for match
            a1.setEnabled(false);
            a2.setEnabled(false);
            a3.setEnabled(false);
@@ -333,19 +334,16 @@ public class Memory3x3 extends Activity {
            handler.postDelayed(new Runnable() {
                @Override
                public void run() {
-                   calculate();
+                   checkForMatch();
                }
            }, 1000);
        }
 
     }
 
+//compares first card against second card. If cards are equal, find the correct button and set it to invisible. Add point for match maker.
+    private void checkForMatch(){
 
-    private void calculate(){
-
-
-        Log.i("--------", "----firstCArd-----"+ firstCard + " ");
-        Log.i("--------", "----secondCard-----"+ secondCard + " ");
         if(firstCard == secondCard){
             if(clickedFirst == 0){
                 a1.setVisibility(View.INVISIBLE);
@@ -432,12 +430,14 @@ public class Memory3x3 extends Activity {
 
                 if(turn == 1){
                 playerPoints++;
-                tv_p1.setText("P1: " + playerPoints);
+                tv_p1_score.setText("P1 Score: " + playerPoints);
                 }else if(turn == 2){
                 cpuPoints++;
-                tv_cmp.setText("P2: " + cpuPoints);
+                tv_p2_score.setText("P2 Score: " + cpuPoints);
                 }
-        }else{
+
+                //if no matches occur, reset cards to face down.
+        }else {
             a1.setImageResource(R.drawable.square100);
             a2.setImageResource(R.drawable.square100);
             a3.setImageResource(R.drawable.square100);
@@ -458,14 +458,17 @@ public class Memory3x3 extends Activity {
             d3.setImageResource(R.drawable.square100);
             d4.setImageResource(R.drawable.square100);
             d5.setImageResource(R.drawable.square100);
-
+        }
+        //change turn animation with arrow.
             if(turn == 1){
                 turn = 2;
+                turn_img.setImageResource(rightArrow);
 
             }else if(turn == 2){
                 turn = 1;
+                turn_img.setImageResource(leftArrow);
             }
-        }
+// re-enable all buttons after check for match is complete.
         a1.setEnabled(true);
         a2.setEnabled(true);
         a3.setEnabled(true);
@@ -499,6 +502,10 @@ public class Memory3x3 extends Activity {
         image7 = R.drawable.yellowfish;
         image8 = R.drawable.biglipfish80;
         image9 = R.drawable.littlewhale;
+        rightArrow = R.drawable.rightarrow;
+        leftArrow = R.drawable.left_arrow;
+
+
 
     }
 }
