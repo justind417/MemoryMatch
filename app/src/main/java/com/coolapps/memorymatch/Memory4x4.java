@@ -1,6 +1,7 @@
 package com.coolapps.memorymatch;
 
 import android.app.Activity;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -15,6 +16,10 @@ import java.util.Collections;
 public class Memory4x4 extends Activity {
 
     TextView tv_p1, tv_cmp, tv_p1_score, tv_p2_score;
+    private MediaPlayer mediaPlayerWin;
+    private MediaPlayer mediaPlayerLose;
+    private MediaPlayer mediaPlayerMatch;
+    private MediaPlayer mediaPlayerMiss;
 
     ImageView a1, a2, a3,a4, b1, b2, b3, b4, c1, c2, c3, c4, d1, d2, d3, d4, turn_img;
 
@@ -33,6 +38,11 @@ public class Memory4x4 extends Activity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_memory4x4);
+
+        mediaPlayerWin = MediaPlayer.create(this, R.raw.win);
+        mediaPlayerLose = MediaPlayer.create(this, R.raw.lose);
+        mediaPlayerMatch = MediaPlayer.create(this, R.raw.match);
+        mediaPlayerMiss = MediaPlayer.create(this, R.raw.miss);
 
        // tv_p1 = findViewById(R.id.player_tv);
         //tv_p1_score = findViewById(R.id.p1_score_tv);
@@ -379,15 +389,18 @@ public class Memory4x4 extends Activity {
             }
 
             if(turn == 1){
+                mediaPlayerMatch.start();
                // playerPoints++;
                 //tv_p1_score.setText("P1 Score: " + playerPoints);
             }else if(turn == 2){
+                mediaPlayerMatch.start();
                 //cpuPoints++;
                 //tv_p2_score.setText("P2 Score: " + cpuPoints);
             }
 
             //if no matches occur, reset cards to face down.
         }else {
+            mediaPlayerMiss.start();
             a1.setImageResource(R.drawable.square100);
             a2.setImageResource(R.drawable.square100);
             a3.setImageResource(R.drawable.square100);
