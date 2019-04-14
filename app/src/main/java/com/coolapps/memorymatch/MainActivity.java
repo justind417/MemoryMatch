@@ -20,11 +20,25 @@ public class MainActivity extends AppCompatActivity {
                 play3x3();
             }
         });
+
+        Button play_4x4 = findViewById(R.id.mem_4x4btn);
+        play_4x4.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                play4x4();
+            }
+        });
+
     }
 
     public void play3x3(){
         Intent intent = new Intent(getApplicationContext(),
                Memory3x3.class );
+        startActivity(intent);
+    }
+    public void play4x4(){
+        Intent intent = new Intent(getApplicationContext(),
+                Memory4x4.class );
         startActivity(intent);
     }
 }
