@@ -6,17 +6,25 @@ import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Random;
 
 public class Memory3x3 extends Activity {
 
     TextView tv_p1, tv_cmp, tv_p1_score, tv_p2_score;
 
     ImageView a1, a2, a3,a4,a5, b1, b2, b3, b4, b5, c1, c2, c3, c4, c5, d1, d2, d3, d4, d5, turn_img;
+
+    boolean cardA1, cardA2, cardA3, cardA4, cardA5,
+            cardB1, cardB2, cardB3, cardB4, cardB5,
+            cardC1, cardC2, cardC3, cardC4, cardC5,
+            cardD1, cardD2, cardD3, cardD4, cardD5;
 
     Integer[] cards= {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19};
 
@@ -25,9 +33,13 @@ public class Memory3x3 extends Activity {
     int firstCard, secondCard;
     int clickedFirst, clickedSecond;
     int cardNumber = 1;
+    boolean playerTurn = true;
+    boolean computerTurn = false;
+
 
     int turn = 1;
     int playerPoints = 0, cpuPoints = 0;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -86,7 +98,8 @@ public class Memory3x3 extends Activity {
         //load images for the board.
         loadImages();
         //shuffle the array to simulate shuffling the cards.
-        Collections.shuffle(Arrays.asList(cards));
+       // Collections.shuffle(Arrays.asList(cards));
+
 
 
 //On Click Listener for each button, calls flip card when clicked & passes the tag number of the card that was clicked as an Integer for card comparison in CheckforMatch.
@@ -95,15 +108,14 @@ public class Memory3x3 extends Activity {
             @Override
             public void onClick(View v) {
                 int thisCard = Integer.parseInt((String) v.getTag());
-                Log.i("--------", "----this card-----"+ thisCard + " ");
                 flipCard(a1,thisCard);
+
             }
         });
         a2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 int thisCard = Integer.parseInt((String) v.getTag());
-                Log.i("--------", "----this card-----"+ thisCard + " ");
                 flipCard(a2, thisCard);
             }
         });
@@ -111,7 +123,6 @@ public class Memory3x3 extends Activity {
             @Override
             public void onClick(View v) {
                 int thisCard = Integer.parseInt((String) v.getTag());
-                Log.i("--------", "----this card-----"+ thisCard + " ");
                 flipCard(a3, thisCard);
             }
         });
@@ -119,7 +130,6 @@ public class Memory3x3 extends Activity {
             @Override
             public void onClick(View v) {
                 int thisCard = Integer.parseInt((String) v.getTag());
-                Log.i("--------", "----this card-----"+ thisCard + " ");
                 flipCard(a4, thisCard);
             }
         });
@@ -127,7 +137,6 @@ public class Memory3x3 extends Activity {
             @Override
             public void onClick(View v) {
                 int thisCard = Integer.parseInt((String) v.getTag());
-                Log.i("--------", "----this card-----"+ thisCard + " ");
                 flipCard(a5, thisCard);
             }
         });
@@ -135,7 +144,6 @@ public class Memory3x3 extends Activity {
             @Override
             public void onClick(View v) {
                 int thisCard = Integer.parseInt((String) v.getTag());
-                Log.i("--------", "----this card-----"+ thisCard + " ");
                 flipCard(b1, thisCard);
             }
         });
@@ -143,7 +151,6 @@ public class Memory3x3 extends Activity {
             @Override
             public void onClick(View v) {
                 int thisCard = Integer.parseInt((String) v.getTag());
-                Log.i("--------", "----this card-----"+ thisCard + " ");
                 flipCard(b2, thisCard);
             }
         });
@@ -151,7 +158,6 @@ public class Memory3x3 extends Activity {
             @Override
             public void onClick(View v) {
                 int thisCard = Integer.parseInt((String) v.getTag());
-                Log.i("--------", "----this card-----"+ thisCard + " ");
                 flipCard(b3, thisCard);
             }
         });
@@ -159,7 +165,6 @@ public class Memory3x3 extends Activity {
             @Override
             public void onClick(View v) {
                 int thisCard = Integer.parseInt((String) v.getTag());
-                Log.i("--------", "----this card-----"+ thisCard + " ");
                 flipCard(b4, thisCard);
             }
         });
@@ -167,7 +172,6 @@ public class Memory3x3 extends Activity {
             @Override
             public void onClick(View v) {
                 int thisCard = Integer.parseInt((String) v.getTag());
-                Log.i("--------", "----this card-----"+ thisCard + " ");
                 flipCard(b5, thisCard);
             }
         });
@@ -175,7 +179,6 @@ public class Memory3x3 extends Activity {
             @Override
             public void onClick(View v) {
                 int thisCard = Integer.parseInt((String) v.getTag());
-                Log.i("--------", "----this card-----"+ thisCard + " ");
                 flipCard(c1, thisCard);
             }
         });
@@ -183,7 +186,7 @@ public class Memory3x3 extends Activity {
             @Override
             public void onClick(View v) {
                 int thisCard = Integer.parseInt((String) v.getTag());
-                Log.i("--------", "----this card-----"+ thisCard + " ");
+
                 flipCard(c2, thisCard);
             }
         });
@@ -191,7 +194,6 @@ public class Memory3x3 extends Activity {
             @Override
             public void onClick(View v) {
                 int thisCard = Integer.parseInt((String) v.getTag());
-                Log.i("--------", "----this card-----"+ thisCard + " ");
                 flipCard(c3, thisCard);
             }
         });
@@ -199,7 +201,6 @@ public class Memory3x3 extends Activity {
             @Override
             public void onClick(View v) {
                 int thisCard = Integer.parseInt((String) v.getTag());
-                Log.i("--------", "----this card-----"+ thisCard + " ");
                 flipCard(c4, thisCard);
             }
         });
@@ -207,7 +208,6 @@ public class Memory3x3 extends Activity {
             @Override
             public void onClick(View v) {
                 int thisCard = Integer.parseInt((String) v.getTag());
-                Log.i("--------", "----this card-----"+ thisCard + " ");
                 flipCard(c5, thisCard);
             }
         });
@@ -244,6 +244,7 @@ public class Memory3x3 extends Activity {
             public void onClick(View v) {
                 int thisCard = Integer.parseInt((String) v.getTag());
                 flipCard(d5, thisCard);
+
             }
         });
 
@@ -251,7 +252,9 @@ public class Memory3x3 extends Activity {
 
 // flip card to show the image
     private void flipCard(ImageView img, int card){
-       if(cards[card] == 0){
+        Log.i("-------", "------card-------" + card + " ");
+        Log.i("-------", "------image view -------" + img + " ");
+       if(cards[card] == 0 ){
             img.setImageResource(image0);
        }else if(cards[card] == 1){
            img.setImageResource(image1);
@@ -293,14 +296,18 @@ public class Memory3x3 extends Activity {
             img.setImageResource(image9);
         }
 //set first and second card to 0-9 to prepare to check for a match
+        Log.i("-------", "------card number-------" + cardNumber + " ");
        if(cardNumber == 1){
            firstCard = cards[card];
+
            if(firstCard >= 10){
                firstCard = firstCard - 10;
            }
+
            cardNumber = 2;
            clickedFirst = card;
            img.setEnabled(false);
+           Log.i("-------", "------card number-------" + cardNumber + " ");
        }else if(cardNumber == 2){
            secondCard = cards[card];
            if(secondCard >= 10){
@@ -334,112 +341,164 @@ public class Memory3x3 extends Activity {
            handler.postDelayed(new Runnable() {
                @Override
                public void run() {
-                   checkForMatch();
+                   Log.i("-------", "------check first / second-------" + firstCard + "         " + secondCard + " ");
+
+                   checkForMatch(firstCard, secondCard);
+
                }
-           }, 1000);
+
+           }, 2000);
+
        }
+
+        computerTurn = true;
+        playerTurn = false;
+
 
     }
 
 //compares first card against second card. If cards are equal, find the correct button and set it to invisible. Add point for match maker.
-    private void checkForMatch(){
+    private void checkForMatch(int first, int second){
 
-        if(firstCard == secondCard){
+        Log.i("-------", "------checkforMatch() first    second-------" + first + " " + second + "-----");
+        if(first == second){
+            Log.i("-------", "------first == second-------" + firstCard + "         " + secondCard + " ");
             if(clickedFirst == 0){
+                cardA1 = true;
                 a1.setVisibility(View.INVISIBLE);
             }else if(clickedFirst == 1) {
+                cardA2 = true;
                 a2.setVisibility(View.INVISIBLE);
             }else if(clickedFirst == 2) {
+                cardA3 = true;
                 a3.setVisibility(View.INVISIBLE);
             }else if(clickedFirst == 3){
+                cardA4 = true;
                 a4.setVisibility(View.INVISIBLE);
             }else if(clickedFirst == 4){
+                cardA5 = true;
                 a5.setVisibility(View.INVISIBLE);
             }else if(clickedFirst == 5) {
+                cardB1 = true;
                 b1.setVisibility(View.INVISIBLE);
             }else if(clickedFirst == 6) {
+                cardB2 = true;
                 b2.setVisibility(View.INVISIBLE);
             }else if(clickedFirst == 7) {
+                cardB3 = true;
                 b3.setVisibility(View.INVISIBLE);
             }else if(clickedFirst == 8){
+                cardB4 = true;
                 b4.setVisibility(View.INVISIBLE);
             }else if(clickedFirst == 9){
+                cardB5 = true;
                 b5.setVisibility(View.INVISIBLE);
             }else if(clickedFirst == 10) {
+                cardC1 = true;
                 c1.setVisibility(View.INVISIBLE);
             }else if(clickedFirst == 11) {
+                cardC2 = true;
                 c2.setVisibility(View.INVISIBLE);
             }else if(clickedFirst == 12) {
+                cardC3 = true;
                 c3.setVisibility(View.INVISIBLE);
             }else if(clickedFirst == 13){
+                cardC4 = true;
                 c4.setVisibility(View.INVISIBLE);
             }else if(clickedFirst == 14){
+                cardC5 = true;
                 c5.setVisibility(View.INVISIBLE);
             }else if(clickedFirst == 15){
+                cardD1 = true;
                 d1.setVisibility(View.INVISIBLE);
             }else if(clickedFirst == 16){
+                cardD2 = true;
                 d2.setVisibility(View.INVISIBLE);
             }else if(clickedFirst == 17){
+                cardD3 = true;
                 d3.setVisibility(View.INVISIBLE);
             }else if(clickedFirst == 18){
+                cardD4 = true;
                 d4.setVisibility(View.INVISIBLE);
             }else if(clickedFirst == 19){
+                cardD5 = true;
                 d5.setVisibility(View.INVISIBLE);
             }
             if(clickedSecond == 0){
                 a1.setVisibility(View.INVISIBLE);
+                cardA1 = true;
             }else if(clickedSecond == 1) {
+                cardA2 = true;
                 a2.setVisibility(View.INVISIBLE);
             }else if(clickedSecond == 2) {
+                cardA3 = true;
                 a3.setVisibility(View.INVISIBLE);
             }else if(clickedSecond == 3){
+                cardA4 = true;
                 a4.setVisibility(View.INVISIBLE);
             }else if(clickedSecond == 4){
+                cardA5 = true;
                 a5.setVisibility(View.INVISIBLE);
             }else if(clickedSecond == 5) {
+                cardB1 = true;
                 b1.setVisibility(View.INVISIBLE);
             }else if(clickedSecond == 6) {
+                cardB2 = true;
                 b2.setVisibility(View.INVISIBLE);
             }else if(clickedSecond == 7) {
+                cardB3 = true;
                 b3.setVisibility(View.INVISIBLE);
             }else if(clickedSecond == 8){
+                cardB4 = true;
                 b4.setVisibility(View.INVISIBLE);
             }else if(clickedSecond == 9){
+                cardB5 = true;
                 b5.setVisibility(View.INVISIBLE);
             }else if(clickedSecond == 10) {
+                cardC1 = true;
                 c1.setVisibility(View.INVISIBLE);
             }else if(clickedSecond == 11) {
+                cardC2 = true;
                 c2.setVisibility(View.INVISIBLE);
             }else if(clickedSecond == 12) {
+                cardC3 = true;
                 c3.setVisibility(View.INVISIBLE);
             }else if(clickedSecond == 13){
+                cardC4 = true;
                 c4.setVisibility(View.INVISIBLE);
             }else if(clickedSecond == 14){
+                cardC5 = true;
                 c5.setVisibility(View.INVISIBLE);
             }else if(clickedSecond == 15){
+                cardD1 = true;
                 d1.setVisibility(View.INVISIBLE);
             }else if(clickedSecond == 16){
+                cardD2 = true;
                 d2.setVisibility(View.INVISIBLE);
             }else if(clickedSecond == 17){
+                cardD3 = true;
                 d3.setVisibility(View.INVISIBLE);
             }else if(clickedSecond == 18){
+                cardD4 = true;
                 d4.setVisibility(View.INVISIBLE);
             }else if(clickedSecond == 19){
+                cardD5 = true;
                 d5.setVisibility(View.INVISIBLE);
             }
 
-                if(turn == 1){
+                if(computerTurn){
                 playerPoints++;
                 tv_p1_score.setText("P1 Score: " + playerPoints);
-                }else if(turn == 2){
+                }else if(playerTurn){
                 cpuPoints++;
                 tv_p2_score.setText("P2 Score: " + cpuPoints);
                 }
 
                 //if no matches occur, reset cards to face down.
         }else {
+            Log.i("-------", "------reset views-------" +  "**************************** ");
             a1.setImageResource(R.drawable.square100);
-            a2.setImageResource(R.drawable.square100);
+           a2.setImageResource(R.drawable.square100);
             a3.setImageResource(R.drawable.square100);
             a4.setImageResource(R.drawable.square100);
             a5.setImageResource(R.drawable.square100);
@@ -458,38 +517,271 @@ public class Memory3x3 extends Activity {
             d3.setImageResource(R.drawable.square100);
             d4.setImageResource(R.drawable.square100);
             d5.setImageResource(R.drawable.square100);
+
+
         }
         //change turn animation with arrow.
-            if(turn == 1){
-                turn = 2;
-                turn_img.setImageResource(rightArrow);
+        if(playerTurn){
+            turn_img.setImageResource(leftArrow);
 
-            }else if(turn == 2){
-                turn = 1;
-                turn_img.setImageResource(leftArrow);
-            }
-// re-enable all buttons after check for match is complete.
-        a1.setEnabled(true);
-        a2.setEnabled(true);
-        a3.setEnabled(true);
-        a4.setEnabled(true);
-        a5.setEnabled(true);
-        b1.setEnabled(true);
-        b2.setEnabled(true);
-        b3.setEnabled(true);
-        b4.setEnabled(true);
-        b5.setEnabled(true);
-        c1.setEnabled(true);
-        c2.setEnabled(true);
-        c3.setEnabled(true);
-        c4.setEnabled(true);
-        c5.setEnabled(true);
-        d1.setEnabled(true);
-        d2.setEnabled(true);
-        d3.setEnabled(true);
-        d4.setEnabled(true);
-        d5.setEnabled(true);
+            //Enable all buttons
+            a1.setEnabled(true);
+            a2.setEnabled(true);
+            a3.setEnabled(true);
+            a4.setEnabled(true);
+            a5.setEnabled(true);
+            b1.setEnabled(true);
+            b2.setEnabled(true);
+            b3.setEnabled(true);
+            b4.setEnabled(true);
+            b5.setEnabled(true);
+            c1.setEnabled(true);
+            c2.setEnabled(true);
+            c3.setEnabled(true);
+            c4.setEnabled(true);
+            c5.setEnabled(true);
+            d1.setEnabled(true);
+            d2.setEnabled(true);
+            d3.setEnabled(true);
+            d4.setEnabled(true);
+            d5.setEnabled(true);
+
+
+        }else if(computerTurn){
+            turn_img.setImageResource(rightArrow);
+
+            //Disable all buttons
+            a1.setEnabled(false);
+            a2.setEnabled(false);
+            a3.setEnabled(false);
+            a4.setEnabled(false);
+            a5.setEnabled(false);
+            b1.setEnabled(false);
+            b2.setEnabled(false);
+            b3.setEnabled(false);
+            b4.setEnabled(false);
+            b5.setEnabled(false);
+            c1.setEnabled(false);
+            c2.setEnabled(false);
+            c3.setEnabled(false);
+            c4.setEnabled(false);
+            c5.setEnabled(false);
+            d1.setEnabled(false);
+            d2.setEnabled(false);
+            d3.setEnabled(false);
+            d4.setEnabled(false);
+            d5.setEnabled(false);
+
+            cpuTurn();
+
+        }
     }
+
+    private void cpuTurn(){
+
+        Random rand = new Random();
+        int ai_firstCard = rand.nextInt(19 );
+
+        boolean firstCardTaken = cpuCheckCardAvailability(ai_firstCard);
+        Log.i("______________________", "firstCard Taken          " + firstCardTaken);
+        Log.i("-------", "------ai first card-------" + ai_firstCard + " ");
+
+        //check if card has already been matched
+
+        while(firstCardTaken == true){
+
+                ai_firstCard = rand.nextInt(19);
+            firstCardTaken = cpuCheckCardAvailability(ai_firstCard);
+
+            }
+
+
+
+
+
+        if(ai_firstCard == 0){
+            flipCard(a1, ai_firstCard);
+        }else if(ai_firstCard == 1){
+            flipCard(a2, ai_firstCard);
+        }else if(ai_firstCard == 2){
+            flipCard(a3, ai_firstCard);
+        }else if(ai_firstCard == 3){
+            flipCard(a4, ai_firstCard);
+        }else if(ai_firstCard == 4){
+            flipCard(a5, ai_firstCard);
+        }else if(ai_firstCard == 5){
+            flipCard(b1, ai_firstCard);
+        }else if(ai_firstCard == 6){
+            flipCard(b2, ai_firstCard);
+        }else if(ai_firstCard == 7){
+            flipCard(b3, ai_firstCard);
+        }else if(ai_firstCard == 8){
+            flipCard(b4, ai_firstCard);
+        }else if(ai_firstCard == 9){
+            flipCard(b5, ai_firstCard);
+        }else if(ai_firstCard == 10){
+            flipCard(c1, ai_firstCard);
+        }else if(ai_firstCard == 11){
+            flipCard(c2, ai_firstCard);
+        }else if(ai_firstCard == 12){
+            flipCard(c3, ai_firstCard);
+        }else if(ai_firstCard == 13){
+            flipCard(c4, ai_firstCard);
+        }else if(ai_firstCard == 14){
+            flipCard(c5, ai_firstCard);
+        }else if(ai_firstCard == 15){
+            flipCard(d1, ai_firstCard);
+        }else if(ai_firstCard == 16){
+            flipCard(d2, ai_firstCard);
+        }else if(ai_firstCard == 17){
+            flipCard(d3, ai_firstCard);
+        }else if(ai_firstCard == 18){
+            flipCard(d4, ai_firstCard);
+        }else if(ai_firstCard == 19){
+            flipCard(d5, ai_firstCard);
+        }
+
+
+        int ai_secondCard = rand.nextInt( 19);
+        while(ai_secondCard == ai_firstCard){
+            ai_secondCard = rand.nextInt(19);
+        }
+        boolean secondCardTaken = cpuCheckCardAvailability(ai_secondCard);
+        Log.i("______________________", "secondCard Taken          " + secondCardTaken);
+      while(secondCardTaken == true) {
+                ai_secondCard = rand.nextInt(19);
+
+                while(ai_secondCard == ai_firstCard){
+                    ai_secondCard = rand.nextInt(19);
+
+                }
+          Log.i("-------", "------ai second card in While LOooooooooooooOOOooooooOOOOOOOoop-------" + ai_secondCard  + " ");
+            secondCardTaken = cpuCheckCardAvailability(ai_secondCard);
+            }
+
+
+        Log.i("-------", "------ai second card-------" + ai_secondCard + " ");
+        if(ai_secondCard == 0){
+            flipCard(a1, ai_secondCard);
+        }else if(ai_secondCard == 1){
+            flipCard(a2, ai_secondCard);
+        }else if(ai_secondCard == 2){
+            flipCard(a3, ai_secondCard);
+        }else if(ai_secondCard == 3){
+            flipCard(a4, ai_secondCard);
+        }else if(ai_secondCard == 4){
+            flipCard(a5, ai_secondCard);
+        }else if(ai_secondCard == 5){
+            flipCard(b1, ai_secondCard);
+        }else if(ai_secondCard == 6){
+            flipCard(b2, ai_secondCard);
+        }else if(ai_secondCard == 7){
+            flipCard(b3, ai_secondCard);
+        }else if(ai_secondCard == 8){
+            flipCard(b4, ai_secondCard);
+        }else if(ai_secondCard == 9){
+            flipCard(b5, ai_secondCard);
+        }else if(ai_secondCard == 10){
+            flipCard(c1, ai_secondCard);
+        }else if(ai_secondCard == 11){
+            flipCard(c2, ai_secondCard);
+        }else if(ai_secondCard == 12){
+            flipCard(c3, ai_secondCard);
+        }else if(ai_secondCard == 13){
+            flipCard(c4, ai_secondCard);
+        }else if(ai_secondCard == 14){
+            flipCard(c5, ai_secondCard);
+        }else if(ai_secondCard == 15){
+            flipCard(d1, ai_secondCard);
+        }else if(ai_secondCard == 16){
+            flipCard(d2, ai_secondCard);
+        }else if(ai_secondCard == 17){
+            flipCard(d3, ai_secondCard);
+        }else if(ai_secondCard == 18){
+            flipCard(d4, ai_secondCard);
+        }else if(ai_secondCard == 19){
+            flipCard(d5, ai_secondCard);
+        }
+
+        computerTurn = false;
+        playerTurn = true;
+
+
+
+    }
+
+
+    private boolean cpuCheckCardAvailability(int cpuCard){
+
+        int ai_firstCard = cpuCard;
+
+        if(ai_firstCard == 0 && cardA1 == true){
+            Log.i("*****************", "__________first card taken = true" + ai_firstCard + "****************");
+            return true;
+
+        }else if(ai_firstCard == 1 && cardA2 == true){
+            Log.i("*****************", "__________first card taken = true" + ai_firstCard + "****************");
+            return true;
+        }else if(ai_firstCard == 2 && cardA3 == true){
+            Log.i("*****************", "__________first card taken = true" + ai_firstCard + "****************");
+            return true;
+        }else if(ai_firstCard == 3 && cardA4 == true){
+            Log.i("*****************", "__________first card taken = true" + ai_firstCard + "****************");
+            return true;
+        }else if(ai_firstCard == 4 && cardA5 == true ){
+            Log.i("*****************", "__________first card taken = true" + ai_firstCard + "****************");
+            return true;
+        }else if(ai_firstCard == 5 && cardB1 == true){
+            Log.i("*****************", "__________first card taken = true" + ai_firstCard + "****************");
+            return true;
+        }else if(ai_firstCard == 6 && cardB2 == true){
+            Log.i("*****************", "__________first card taken = true" + ai_firstCard + "****************");
+            return true;
+        }else if(ai_firstCard == 7 && cardB3 == true){
+            Log.i("*****************", "__________first card taken = true" + ai_firstCard + "****************");
+            return true;
+        }else if(ai_firstCard == 8 && cardB4 == true){
+            Log.i("*****************", "__________first card taken = true" + ai_firstCard + "****************");
+            return true;
+        }else if(ai_firstCard == 9 && cardB5 == true){
+            Log.i("*****************", "__________first card taken = true" + ai_firstCard + "****************");
+            return true;
+        }else if(ai_firstCard == 10 && cardC1 == true){
+            Log.i("*****************", "__________first card taken = true" + ai_firstCard + "****************");
+            return true;
+        }else if(ai_firstCard == 11 && cardC2 == true){
+            Log.i("*****************", "__________first card taken = true" + ai_firstCard + "****************");
+            return true;
+        }else if(ai_firstCard == 12 && cardC3 == true){
+            Log.i("*****************", "__________first card taken = true" + ai_firstCard + "****************");
+            return true;
+        }else if(ai_firstCard == 13 && cardC4 == true){
+            Log.i("*****************", "__________first card taken = true" + ai_firstCard + "****************");
+            return true;
+        }else if(ai_firstCard == 14 && cardC5 == true){
+            Log.i("*****************", "__________first card taken = true" + ai_firstCard + "****************");
+            return true;
+        }else if(ai_firstCard == 15 && cardD1 == true){
+            Log.i("*****************", "__________first card taken = true" + ai_firstCard + "****************");
+            return true;
+        }else if(ai_firstCard == 16 && cardD2 == true){
+            Log.i("*****************", "__________first card taken = true" + ai_firstCard + "****************");
+            return true;
+        }else if(ai_firstCard == 17 && cardD3 == true){
+            Log.i("*****************", "__________first card taken = true" + ai_firstCard + "****************");
+            return true;
+        }else if(ai_firstCard == 18 && cardD4 == true){
+            Log.i("*****************", "__________first card taken = true" + ai_firstCard + "****************");
+            return true;
+        }else if(ai_firstCard == 19 && cardD5 == true){
+            Log.i("*****************", "__________first card taken = true" + ai_firstCard + "****************");
+            return true;
+        }else {
+            return false;
+        }
+    }
+
+
 
     private void loadImages(){
         image0 = R.drawable.dolphin80;
@@ -508,4 +800,7 @@ public class Memory3x3 extends Activity {
 
 
     }
-}
+
+
+    }
+
