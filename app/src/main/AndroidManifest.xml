@@ -24,6 +24,10 @@
             android:name=".Memory4x4"
             android:label="Memory4x4"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".AboutActivity"
+            android:label="AboutActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>
