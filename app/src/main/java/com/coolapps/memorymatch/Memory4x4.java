@@ -15,11 +15,13 @@ import java.util.Collections;
 
 public class Memory4x4 extends Activity {
 
-    TextView tv_p1, tv_cmp, tv_p1_score, tv_p2_score;
+    TextView tv_p1, tv_cmp, tv_p1_score, tv_p2_score,winner_tv;
     private MediaPlayer mediaPlayerWin;
     private MediaPlayer mediaPlayerLose;
     private MediaPlayer mediaPlayerMatch;
     private MediaPlayer mediaPlayerMiss;
+
+    int matchCount=0;
 
     ImageView a1, a2, a3,a4, b1, b2, b3, b4, c1, c2, c3, c4, d1, d2, d3, d4, turn_img;
 
@@ -38,12 +40,14 @@ public class Memory4x4 extends Activity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_memory4x4);
-
+        matchCount=0;
         mediaPlayerWin = MediaPlayer.create(this, R.raw.win);
         mediaPlayerLose = MediaPlayer.create(this, R.raw.lose);
         mediaPlayerMatch = MediaPlayer.create(this, R.raw.match);
         mediaPlayerMiss = MediaPlayer.create(this, R.raw.miss);
 
+        winner_tv=findViewById(R.id.winner_tv);
+        winner_tv.setVisibility(View.INVISIBLE);
        // tv_p1 = findViewById(R.id.player_tv);
         //tv_p1_score = findViewById(R.id.p1_score_tv);
         //tv_cmp = findViewById(R.id.computer_tv);
@@ -321,6 +325,7 @@ public class Memory4x4 extends Activity {
     private void checkForMatch(){
 
         if(firstCard == secondCard){
+            matchCount++;
             if(clickedFirst == 0){
                 a1.setVisibility(View.INVISIBLE);
             }else if(clickedFirst == 1) {
@@ -397,7 +402,10 @@ public class Memory4x4 extends Activity {
                 //cpuPoints++;
                 //tv_p2_score.setText("P2 Score: " + cpuPoints);
             }
+if(matchCount==8){
+    winner_tv.setVisibility(View.VISIBLE);
 
+}
             //if no matches occur, reset cards to face down.
         }else {
             mediaPlayerMiss.start();
