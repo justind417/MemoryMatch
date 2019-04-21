@@ -32,32 +32,32 @@
 
                 <ImageButton
                     android:id="@+id/A1_img_btn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
                     android:layout_weight="1"
                     android:background="@android:color/transparent"
                     android:src="@drawable/square100" />
 
                 <ImageButton
                     android:id="@+id/A2_img_btn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
                     android:layout_weight="1"
                     android:background="@android:color/transparent"
                     android:src="@drawable/square100" />
 
                 <ImageButton
                     android:id="@+id/A3_img_btn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
                     android:layout_weight="1"
                     android:background="@android:color/transparent"
                     android:src="@drawable/square100" />
 
                 <ImageButton
                     android:id="@+id/A4_img_btn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
                     android:layout_weight="1"
                     android:background="@android:color/transparent"
                     android:src="@drawable/square100" />
@@ -70,32 +70,32 @@
 
                 <ImageButton
                     android:id="@+id/B1_img_btn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
                     android:layout_weight="1"
                     android:background="@android:color/transparent"
                     android:src="@drawable/square100" />
 
                 <ImageButton
                     android:id="@+id/B2_img_btn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
                     android:layout_weight="1"
                     android:background="@android:color/transparent"
                     android:src="@drawable/square100" />
 
                 <ImageButton
                     android:id="@+id/B3_img_btn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
                     android:layout_weight="1"
                     android:background="@android:color/transparent"
                     android:src="@drawable/square100" />
 
                 <ImageButton
                     android:id="@+id/B4_img_btn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
                     android:layout_weight="1"
                     android:background="@android:color/transparent"
                     android:src="@drawable/square100" />
@@ -108,32 +108,32 @@
 
                 <ImageButton
                     android:id="@+id/C1_img_btn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
                     android:layout_weight="1"
                     android:background="@android:color/transparent"
                     android:src="@drawable/square100" />
 
                 <ImageButton
                     android:id="@+id/C2_img_btn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
                     android:layout_weight="1"
                     android:background="@android:color/transparent"
                     android:src="@drawable/square100" />
 
                 <ImageButton
                     android:id="@+id/C3_img_btn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
                     android:layout_weight="1"
                     android:background="@android:color/transparent"
                     android:src="@drawable/square100" />
 
                 <ImageButton
                     android:id="@+id/C4_img_btn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
                     android:layout_weight="1"
                     android:background="@android:color/transparent"
                     android:src="@drawable/square100" />
@@ -146,32 +146,32 @@
 
                 <ImageButton
                     android:id="@+id/D1_img_btn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
                     android:layout_weight="1"
                     android:background="@android:color/transparent"
                     android:src="@drawable/square100" />
 
                 <ImageButton
                     android:id="@+id/D2_img_btn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
                     android:layout_weight="1"
                     android:background="@android:color/transparent"
                     android:src="@drawable/square100" />
 
                 <ImageButton
                     android:id="@+id/D3_img_btn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
                     android:layout_weight="1"
                     android:background="@android:color/transparent"
                     android:src="@drawable/square100" />
 
                 <ImageButton
                     android:id="@+id/D4_img_btn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
                     android:layout_weight="1"
                     android:background="@android:color/transparent"
                     android:src="@drawable/square100" />
@@ -191,31 +191,23 @@
         android:layout_height="222dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="60dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline">
 
         <TextView
-            android:id="@+id/player_tv"
+            android:id="@+id/winner_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="64dp"
-            android:text="Player's Turn"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/computer_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="32dp"
-            android:layout_marginTop="64dp"
-            android:text="Computer's Turn"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:text="You matched them all!"
+            android:textSize="32sp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintStart_toStartOf="parent" />
     </android.support.constraint.ConstraintLayout>
 
 </android.support.constraint.ConstraintLayout>
