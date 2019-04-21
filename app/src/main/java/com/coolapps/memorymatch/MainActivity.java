@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void play3x3(){
         Intent intent = new Intent(getApplicationContext(),
-               Memory3x3.class );
+               Memory5x4.class );
         startActivity(intent);
     }
     public void play4x4(){

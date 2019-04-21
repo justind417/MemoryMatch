@@ -1,13 +1,12 @@
 package com.coolapps.memorymatch;
 
 import android.app.Activity;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -15,9 +14,9 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Random;
 
-public class Memory3x3 extends Activity {
+public class Memory5x4 extends Activity {
 
-    TextView tv_p1, tv_cmp, tv_p1_score, tv_p2_score;
+    TextView tv_p1, tv_cmp, tv_p1_score, tv_p2_score, winner_tv;
 
     ImageView a1, a2, a3,a4,a5, b1, b2, b3, b4, b5, c1, c2, c3, c4, c5, d1, d2, d3, d4, d5, turn_img;
 
@@ -35,7 +34,11 @@ public class Memory3x3 extends Activity {
     int cardNumber = 1;
     boolean playerTurn = true;
     boolean computerTurn = false;
-
+    private MediaPlayer mediaPlayerWin;
+    private MediaPlayer mediaPlayerLose;
+    private MediaPlayer mediaPlayerMatch;
+    private MediaPlayer mediaPlayerMiss;
+    int matchcount = 0;
 
     int turn = 1;
     int playerPoints = 0, cpuPoints = 0;
@@ -44,12 +47,19 @@ public class Memory3x3 extends Activity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_memory3x3);
+        setContentView(R.layout.activity_memory5x4);
 
         tv_p1 = findViewById(R.id.player_tv);
         tv_p1_score = findViewById(R.id.p1_score_tv);
         tv_cmp = findViewById(R.id.computer_tv);
         tv_p2_score = findViewById(R.id.p2_score_tv);
+        winner_tv=findViewById(R.id.winner_tv);
+        winner_tv.setVisibility(View.INVISIBLE);
+
+        mediaPlayerWin = MediaPlayer.create(this, R.raw.win);
+        mediaPlayerLose = MediaPlayer.create(this, R.raw.lose);
+        mediaPlayerMatch = MediaPlayer.create(this, R.raw.match);
+        mediaPlayerMiss = MediaPlayer.create(this, R.raw.miss);
 
         a1 = findViewById(R.id.A1_img_btn);
         a2 = findViewById(R.id.A2_img_btn);
@@ -97,8 +107,9 @@ public class Memory3x3 extends Activity {
 
         //load images for the board.
         loadImages();
+
         //shuffle the array to simulate shuffling the cards.
-       // Collections.shuffle(Arrays.asList(cards));
+        Collections.shuffle(Arrays.asList(cards));
 
 
 
@@ -252,8 +263,6 @@ public class Memory3x3 extends Activity {
 
 // flip card to show the image
     private void flipCard(ImageView img, int card){
-        Log.i("-------", "------card-------" + card + " ");
-        Log.i("-------", "------image view -------" + img + " ");
        if(cards[card] == 0 ){
             img.setImageResource(image0);
        }else if(cards[card] == 1){
@@ -296,7 +305,6 @@ public class Memory3x3 extends Activity {
             img.setImageResource(image9);
         }
 //set first and second card to 0-9 to prepare to check for a match
-        Log.i("-------", "------card number-------" + cardNumber + " ");
        if(cardNumber == 1){
            firstCard = cards[card];
 
@@ -307,7 +315,6 @@ public class Memory3x3 extends Activity {
            cardNumber = 2;
            clickedFirst = card;
            img.setEnabled(false);
-           Log.i("-------", "------card number-------" + cardNumber + " ");
        }else if(cardNumber == 2){
            secondCard = cards[card];
            if(secondCard >= 10){
@@ -341,7 +348,6 @@ public class Memory3x3 extends Activity {
            handler.postDelayed(new Runnable() {
                @Override
                public void run() {
-                   Log.i("-------", "------check first / second-------" + firstCard + "         " + secondCard + " ");
 
                    checkForMatch(firstCard, secondCard);
 
@@ -360,9 +366,8 @@ public class Memory3x3 extends Activity {
 //compares first card against second card. If cards are equal, find the correct button and set it to invisible. Add point for match maker.
     private void checkForMatch(int first, int second){
 
-        Log.i("-------", "------checkforMatch() first    second-------" + first + " " + second + "-----");
         if(first == second){
-            Log.i("-------", "------first == second-------" + firstCard + "         " + secondCard + " ");
+            matchcount++;
             if(clickedFirst == 0){
                 cardA1 = true;
                 a1.setVisibility(View.INVISIBLE);
@@ -487,16 +492,38 @@ public class Memory3x3 extends Activity {
             }
 
                 if(computerTurn){
+                mediaPlayerMatch.start();
                 playerPoints++;
                 tv_p1_score.setText("P1 Score: " + playerPoints);
                 }else if(playerTurn){
+                mediaPlayerMatch.start();
                 cpuPoints++;
                 tv_p2_score.setText("P2 Score: " + cpuPoints);
                 }
+              if(matchcount == 10){
+                    if(playerPoints > cpuPoints){
+                        tv_p1.setVisibility(View.INVISIBLE);
+                        tv_cmp.setVisibility(View.INVISIBLE);
+                        tv_p1_score.setVisibility(View.INVISIBLE);
+                        tv_p2_score.setVisibility(View.INVISIBLE);
+                        turn_img.setVisibility(View.INVISIBLE);
+                        winner_tv.setVisibility(View.VISIBLE);
+                        winner_tv.setText("You Win!");
+                    }else if(cpuPoints > playerPoints)
+                    {
+                        tv_p1.setVisibility(View.INVISIBLE);
+                        tv_cmp.setVisibility(View.INVISIBLE);
+                        tv_p1_score.setVisibility(View.INVISIBLE);
+                        tv_p2_score.setVisibility(View.INVISIBLE);
+                        turn_img.setVisibility(View.INVISIBLE);
+                        winner_tv.setVisibility(View.VISIBLE);
+                        winner_tv.setText("You Lose!");
+                    }
+               }
 
                 //if no matches occur, reset cards to face down.
         }else {
-            Log.i("-------", "------reset views-------" +  "**************************** ");
+            mediaPlayerMiss.start();
             a1.setImageResource(R.drawable.square100);
            a2.setImageResource(R.drawable.square100);
             a3.setImageResource(R.drawable.square100);
@@ -572,8 +599,10 @@ public class Memory3x3 extends Activity {
             d4.setEnabled(false);
             d5.setEnabled(false);
 
-            cpuTurn();
+            if(matchcount != 10) {
 
+                cpuTurn();
+            }
         }
     }
 
@@ -583,8 +612,6 @@ public class Memory3x3 extends Activity {
         int ai_firstCard = rand.nextInt(19 );
 
         boolean firstCardTaken = cpuCheckCardAvailability(ai_firstCard);
-        Log.i("______________________", "firstCard Taken          " + firstCardTaken);
-        Log.i("-------", "------ai first card-------" + ai_firstCard + " ");
 
         //check if card has already been matched
 
@@ -647,7 +674,6 @@ public class Memory3x3 extends Activity {
             ai_secondCard = rand.nextInt(19);
         }
         boolean secondCardTaken = cpuCheckCardAvailability(ai_secondCard);
-        Log.i("______________________", "secondCard Taken          " + secondCardTaken);
       while(secondCardTaken == true) {
                 ai_secondCard = rand.nextInt(19);
 
@@ -655,12 +681,9 @@ public class Memory3x3 extends Activity {
                     ai_secondCard = rand.nextInt(19);
 
                 }
-          Log.i("-------", "------ai second card in While LOooooooooooooOOOooooooOOOOOOOoop-------" + ai_secondCard  + " ");
             secondCardTaken = cpuCheckCardAvailability(ai_secondCard);
             }
 
-
-        Log.i("-------", "------ai second card-------" + ai_secondCard + " ");
         if(ai_secondCard == 0){
             flipCard(a1, ai_secondCard);
         }else if(ai_secondCard == 1){
@@ -716,65 +739,45 @@ public class Memory3x3 extends Activity {
         int ai_firstCard = cpuCard;
 
         if(ai_firstCard == 0 && cardA1 == true){
-            Log.i("*****************", "__________first card taken = true" + ai_firstCard + "****************");
             return true;
 
         }else if(ai_firstCard == 1 && cardA2 == true){
-            Log.i("*****************", "__________first card taken = true" + ai_firstCard + "****************");
             return true;
         }else if(ai_firstCard == 2 && cardA3 == true){
-            Log.i("*****************", "__________first card taken = true" + ai_firstCard + "****************");
             return true;
         }else if(ai_firstCard == 3 && cardA4 == true){
-            Log.i("*****************", "__________first card taken = true" + ai_firstCard + "****************");
             return true;
         }else if(ai_firstCard == 4 && cardA5 == true ){
-            Log.i("*****************", "__________first card taken = true" + ai_firstCard + "****************");
             return true;
         }else if(ai_firstCard == 5 && cardB1 == true){
-            Log.i("*****************", "__________first card taken = true" + ai_firstCard + "****************");
             return true;
         }else if(ai_firstCard == 6 && cardB2 == true){
-            Log.i("*****************", "__________first card taken = true" + ai_firstCard + "****************");
             return true;
         }else if(ai_firstCard == 7 && cardB3 == true){
-            Log.i("*****************", "__________first card taken = true" + ai_firstCard + "****************");
             return true;
         }else if(ai_firstCard == 8 && cardB4 == true){
-            Log.i("*****************", "__________first card taken = true" + ai_firstCard + "****************");
             return true;
         }else if(ai_firstCard == 9 && cardB5 == true){
-            Log.i("*****************", "__________first card taken = true" + ai_firstCard + "****************");
             return true;
         }else if(ai_firstCard == 10 && cardC1 == true){
-            Log.i("*****************", "__________first card taken = true" + ai_firstCard + "****************");
             return true;
         }else if(ai_firstCard == 11 && cardC2 == true){
-            Log.i("*****************", "__________first card taken = true" + ai_firstCard + "****************");
             return true;
         }else if(ai_firstCard == 12 && cardC3 == true){
-            Log.i("*****************", "__________first card taken = true" + ai_firstCard + "****************");
             return true;
         }else if(ai_firstCard == 13 && cardC4 == true){
-            Log.i("*****************", "__________first card taken = true" + ai_firstCard + "****************");
             return true;
         }else if(ai_firstCard == 14 && cardC5 == true){
-            Log.i("*****************", "__________first card taken = true" + ai_firstCard + "****************");
             return true;
         }else if(ai_firstCard == 15 && cardD1 == true){
-            Log.i("*****************", "__________first card taken = true" + ai_firstCard + "****************");
             return true;
         }else if(ai_firstCard == 16 && cardD2 == true){
-            Log.i("*****************", "__________first card taken = true" + ai_firstCard + "****************");
             return true;
         }else if(ai_firstCard == 17 && cardD3 == true){
-            Log.i("*****************", "__________first card taken = true" + ai_firstCard + "****************");
             return true;
         }else if(ai_firstCard == 18 && cardD4 == true){
-            Log.i("*****************", "__________first card taken = true" + ai_firstCard + "****************");
             return true;
         }else if(ai_firstCard == 19 && cardD5 == true){
-            Log.i("*****************", "__________first card taken = true" + ai_firstCard + "****************");
             return true;
         }else {
             return false;

@@ -17,7 +17,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Memory3x3"
+            android:name=".Memory5x4"
             android:label="Memory3x3"
             android:screenOrientation="portrait" />
         <activity
