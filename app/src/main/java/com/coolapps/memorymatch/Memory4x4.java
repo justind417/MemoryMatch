@@ -43,8 +43,8 @@ public class Memory4x4 extends Activity {
         matchCount=0;
         mediaPlayerWin = MediaPlayer.create(this, R.raw.win);
         mediaPlayerLose = MediaPlayer.create(this, R.raw.lose);
-        mediaPlayerMatch = MediaPlayer.create(this, R.raw.e);
-        mediaPlayerMiss = MediaPlayer.create(this, R.raw.miss);
+        mediaPlayerMatch = MediaPlayer.create(this, R.raw.electrowinsound);
+        mediaPlayerMiss = MediaPlayer.create(this, R.raw.youlosesfx);
 
         winner_tv=findViewById(R.id.winner_tv);
         winner_tv.setVisibility(View.INVISIBLE);
